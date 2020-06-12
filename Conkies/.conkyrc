@@ -1,0 +1,107 @@
+conky.config = {
+
+--Conky beállítások
+
+update_interval = 1,
+total_run_times = 0,
+net_avg_samples = 1,
+cpu_avg_samples = 1,
+if_up_strictness = 'link',
+imlib_cache_size = 0,
+double_buffer = true,
+no_buffers = true,
+format_human_readable = true,
+
+--Szöveg
+
+use_xft = true,
+font = 'Ubuntu:size=8', 
+override_utf8_locale = true,
+text_buffer_size = 2048,
+
+--Ablak beállítások, elhelyezkedés
+
+own_window = true,
+own_window_type = 'normal',
+own_window_transparent = false,
+own_window_argb_value = 150,
+own_window_argb_visual = true,
+own_window_hints = 'undecorated,below,sticky,skip_taskbar,skip_pager',
+alignment = 'middle_right',
+gap_x = 15,
+gap_y = 0,	
+minimum_height = 500,						
+minimum_width = 182,						
+maximum_width = 182,						
+default_bar_height = 10,
+default_bar_width = 0,
+default_graph_height = 10,
+default_graph_width = 0,
+own_window_colour = '#000000',
+
+--Grafikai beállítások, színek
+
+draw_shades = false,
+default_color = '#FFFFFF',
+--color1 = '#CACACA'
+};
+
+
+conky.text = [[
+${font Ubuntu:size= 9:bold}Rendszer ${hr 1}${font}
+${color1}${offset 30}Kernel: ${color}${alignr}${exec uname -r}
+${color1}${offset 30}Uptime:${color}${alignr}${uptime}
+${image /home/mateszabo2001/.conky_assets/linuxmint.png -s 41x41 -p -2, 7}
+
+${voffset -20}${alignc}${font Ubuntu:size= 15}${time %H:%M}${font}
+
+${voffset -10}${font Ubuntu:size= 10}${alignc}${time %Y}. ${time %B} ${time %d}, ${time %A}${font}
+
+CPU Frekvencia:${color} $alignr${freq}MHz
+CPU Hőmérséklet:${color} $alignr${execi 10 sensors | grep 'Core 0' | awk {'print $3'}}
+${color1}CPU1:${offset 2}${color}${cpu cpu1}% ${alignr}${offset -120}${cpugraph cpu1}
+${color1}CPU2:${offset 2}${color}${cpu cpu2}% ${alignr}${offset -120}${cpugraph cpu2}
+${color1}CPU3:${offset 2}${color}${cpu cpu3}% ${alignr}${offset -120}${cpugraph cpu3}
+${color1}CPU4:${offset 2}${color}${cpu cpu4}% ${alignr}${offset -120}${cpugraph cpu4}
+${color2}${font Ubuntu:size=8, }RAM:${offset 1}${memperc}%${alignr}${color}${mem} / ${memmax}
+${membar 6}
+
+${color2}Folyamatok ${alignr 23}CPU ${alignr}RAM
+${voffset -7}${hr 2}
+${top name 1}${alignr} ${top cpu 1}% ${top mem 1}%
+${top name 2}${alignr} ${top cpu 2}% ${top mem 2}%
+${top name 3}${alignr} ${top cpu 3}% ${top mem 3}%
+${top name 4}${alignr} ${top cpu 4}% ${top mem 4}%
+${top name 5}${alignr} ${top cpu 5}% ${top mem 5}%
+${top name 6}${alignr} ${top cpu 6}% ${top mem 6}%
+${top name 7}${alignr} ${top cpu 7}% ${top mem 7}%
+${top name 8}${alignr} ${top cpu 8}% ${top mem 8}%
+
+${font Ubuntu:size= 9}GeForce GTX 1650 ${hr 1}${font}
+Memória:${alignr}${execi 60 nvidia-settings -q [gpu:0]/UsedDedicatedGPUMemory -t} / ${exec nvidia-settings -q [gpu:0]/TotalDedicatedGPUMemory -t} MiB
+Órajel:${alignr}${execi 60 nvidia-settings -q GPUCurrentClockFreqs | grep -m 1 Attribute | awk '{print $4}' | sed -e 's/\.//' | cut -d, -f1} MHz
+Hőmérséklet:${alignr}${execi 10 nvidia-smi --query-gpu=temperature.gpu --format=csv,noheader} °C
+Driver: ${alignr}${execi 60000 nvidia-smi | grep "Driver Version"| awk {'print $3'}}
+Ventillátor:${alignr}${execi 60 nvidia-settings -q [fan:0]/GPUCurrentFanSpeed -t} %
+Fogyasztás: ${color} ${alignr}${exec nvidia-smi | grep % | cut -c 21-23} W
+Kihasználtság${color}  ${alignr 55}${execi 60 nvidia-smi | grep % | cut -c 61-63}% ${execbar nvidia-smi | grep % | cut -c 62-63}
+
+${font Ubuntu:size= 9}Lemezek${hr 1}${font}
+${voffset 3}Linux root:${offset 5}${alignr}${fs_size /} / ${fs_used /}
+Szabad: ${alignr}${fs_free /}
+${voffset 2}${fs_bar}
+${voffset 3}Linux home:${offset 5}${alignr}${fs_size /home} / ${fs_used /home}
+Szabad: ${alignr}${fs_free /home}
+${voffset 2}${fs_bar /home}
+${voffset 3}Windows 10:${offset 5}${alignr}${fs_size /media/mateszabo2001/0AA23C72A23C647B/} / ${fs_used /media/mateszabo2001/0AA23C72A23C647B/}
+Szabad: ${alignr}${fs_free /media/mateszabo2001/0AA23C72A23C647B/}
+${voffset 2}${fs_bar /media/mateszabo2001/0AA23C72A23C647B/}
+
+${font Ubuntu:size= 9}Internet${hr 1}${font}
+
+#IP Address: ${color} ${alignr}${addrs enp3s0}
+${voffset -10}Fel:${offset 2}${upspeed enp3s0}${alignr}${upspeedgraph enp3s0 10,120}
+Összes fel:${alignr}${totalup enp3s0}
+Le:${offset 2}${downspeed enp3s0}${alignr}${downspeedgraph enp3s0 10,120}
+Összes le: ${alignr}${totaldown enp3s0}
+]]
