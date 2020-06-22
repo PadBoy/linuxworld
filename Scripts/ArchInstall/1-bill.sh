@@ -1,5 +1,9 @@
-#!/bin/bash
+#!/bin/zsh
+echo
+echo '######################################'
+echo '# A billentyuzet atallitasa magyarra #'
+echo '######################################'
+echo
+loadkeys hu
 
-echo -n "Enter your name: "
-read name
-echo "Hello, $name"
+echo 'atallitva'
