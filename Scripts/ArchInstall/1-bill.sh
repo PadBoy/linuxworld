@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "########################################"
-echo "# - Billentyűzet beállítása magyarra - #"
-echo "########################################"
-echo "Egyes karakterek így sem lesznek elérhetők!"
+
+echo -n "Enter your name: "
+read name
+echo "Hello, $name"
